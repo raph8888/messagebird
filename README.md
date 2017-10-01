@@ -13,6 +13,7 @@
  - Use [Postman](https://www.getpostman.com/) to test the API and get the response
  - Access <http://www.raph-web.eu:4040/messagebird>
  
+### Example
  
 ```php
 <?php
