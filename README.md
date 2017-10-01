@@ -21,7 +21,7 @@
     //api url
     $url = "http://www.raph-web.eu:2020";
     
-    $data_string = json_encode($_POST);
+    $data_string = json_encode($post_values);
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
