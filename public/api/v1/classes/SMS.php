@@ -112,6 +112,13 @@ class SMS
         // Set a variable that defines from where each message should start
         $character_index_start = 0;
 
+        $totalMessagePartsNoHex = dechex($total_message_parts);
+        if (strlen($totalMessagePartsNoHex) == 1) $totalMessagePartsNoHex = "0" . $totalMessagePartsNoHex;
+        //generate random decimal number from range 0 to 255
+        $identifyCode = rand(0, 255);
+        //converts from decimal to hexadecimal; 2 digit, so range is  16= 10 ; ff=255
+        $identifyCodeHex = dechex($identifyCode);
+
         // Loop as many times as messages needed
         for ($i = 1; $i <= $total_message_parts; $i++) {
 
@@ -121,8 +128,13 @@ class SMS
             // Increase the value of the variable the defines where the message starts
             $character_index_start += 153;
 
+            $currentMessagePartsNoHex = dechex($i);
+            if (strlen($currentMessagePartsNoHex) == 1) $currentMessagePartsNoHex = "0" . $currentMessagePartsNoHex;
+            //Sample UDH: 0500032F0201
+            $UserHeader = '050003' . $identifyCodeHex . $totalMessagePartsNoHex . $currentMessagePartsNoHex;
+
             //callMessageBird
-            $response[$i] = $this->callMessageBird($phone_number, $message_part);
+            $response[$i] = $this->callMessageBird($phone_number, $message_part, $UserHeader);
         }
 
         // Return array of responses
@@ -135,13 +147,15 @@ class SMS
      * @param $phone_number
      * @param $message
      */
-    function callMessageBird($phone_number, $message)
+    function callMessageBird($phone_number, $message, $user_header = '')
     {
         // Client needs to be instantiated per message
         // also per part of concatenated message
         $this->client = new Client('7pgSx0IlPkp4nVpkgAVGv8KLo');
 
         $Message = new Message();
+        $Message->type = $user_header ? 'binary' : 'sms';
+        $Message->typeDetails['udh'] = $user_header;
         $Message->originator = $this->originator;
         $Message->recipients = $phone_number;
         $Message->body = $message;
