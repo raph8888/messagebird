@@ -20,7 +20,6 @@ try {
     }
 
     // Handle json post request, get raw post data.
-    // Less memory intensive alternative to $HTTP_RAW_POST_DATA
     $content = trim(file_get_contents("php://input"));
 
     // Attempt to decode the incoming raw post data from json.
@@ -43,7 +42,7 @@ try {
     );
 }
 
-// Calculates the execution time of the script.
+// Calculate execution time of the script.
 // 1 message = float(0.15762090683)
 // 2 messages (concatenated) = float(0.341706037521)
 // 4 messages (concatenated) = float(0.564226865768)

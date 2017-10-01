@@ -42,13 +42,16 @@ class SMS
      * Validates phone number
      * Only possible to send messages to The Netherlands
      *
+     * @param $phone_number
      * @throws Exception()
+     * @returns $phone_number
      */
     function validatePhone($phone_number)
     {
         if (strlen($phone_number) < 10) {
             throw new \Exception('The number is incorrect, it must have at least 10 characters');
         }
+        // Possible ways to validate phone numbers
         if (substr($phone_number, 0, 4) == '0031') {
             return '31' . substr($phone_number, 4);
         } elseif (substr($phone_number, 0, 3) == '316') {
@@ -66,6 +69,7 @@ class SMS
      *
      * @param $message
      * @throws Exception()
+     * @return $message
      */
     function validateMessage($message)
     {
