@@ -1,7 +1,7 @@
-### MessageBird API
+### MessageBird Connector API
 
 - **API url:** <http://raph-web.eu:2020>
-- Sends text message using test api key
+- Sends text message using MessageBird's REST API
 - Request must be POST
 - Content type must be: application\/json
   - Example:
