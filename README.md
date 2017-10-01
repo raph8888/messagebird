@@ -12,3 +12,25 @@
  
  - Use [Postman](https://www.getpostman.com/) to test the API and get the response
  - Access <http://www.raph-web.eu:4040/messagebird>
+ 
+ 
+```php
+<?php
+
+//api url
+
+    $url = "http://www.raph-web.eu:2020";
+    $data_string = json_encode($_POST);
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string))
+    );
+
+    $result = curl_exec($ch);
+```
+ 

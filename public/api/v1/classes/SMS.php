@@ -23,7 +23,7 @@ class SMS
      */
     public function send($values)
     {
-        // Validation
+        // Input validation
         $phone_number = $this->validatePhone($values["recipient"]);
         $message_body = $this->validateMessage($values["message"]);
         $this->validateOriginator($values["originator"]);
@@ -121,6 +121,7 @@ class SMS
             $response[$i] = $this->callMessageBird($phone_number, $message_part);
         }
 
+        // Return array of responses
         return $response;
     }
 
@@ -132,6 +133,8 @@ class SMS
      */
     function callMessageBird($phone_number, $message)
     {
+        // Client needs to be instantiated per message
+        // also per part of concatenated message
         $this->client = new Client('7pgSx0IlPkp4nVpkgAVGv8KLo');
 
         $Message = new Message();
