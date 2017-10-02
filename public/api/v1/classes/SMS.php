@@ -112,12 +112,12 @@ class SMS
         // Set a variable that defines from where each message should start
         $character_index_start = 0;
 
-        $totalMessagePartsNoHex = dechex($total_message_parts);
-        if (strlen($totalMessagePartsNoHex) == 1) $totalMessagePartsNoHex = "0" . $totalMessagePartsNoHex;
+        $total_message_parts_no_hex = dechex($total_message_parts);
+        if (strlen($total_message_parts_no_hex) == 1) $total_message_parts_no_hex = "0" . $total_message_parts_no_hex;
         //generate random decimal number from range 0 to 255
-        $identifyCode = rand(0, 255);
+        $identify_code = rand(0, 255);
         //converts from decimal to hexadecimal; 2 digit, so range is  16= 10 ; ff=255
-        $identifyCodeHex = dechex($identifyCode);
+        $identify_code_hex = dechex($identify_code);
 
         // Loop as many times as messages needed
         for ($i = 1; $i <= $total_message_parts; $i++) {
@@ -128,10 +128,10 @@ class SMS
             // Increase the value of the variable the defines where the message starts
             $character_index_start += 153;
 
-            $currentMessagePartsNoHex = dechex($i);
-            if (strlen($currentMessagePartsNoHex) == 1) $currentMessagePartsNoHex = "0" . $currentMessagePartsNoHex;
+            $current_message_parts_no_hex = dechex($i);
+            if (strlen($current_message_parts_no_hex) == 1) $current_message_parts_no_hex = "0" . $current_message_parts_no_hex;
             //Sample UDH: 0500032F0201
-            $UserHeader = '050003' . $identifyCodeHex . $totalMessagePartsNoHex . $currentMessagePartsNoHex;
+            $UserHeader = '050003' . $identify_code_hex . $total_message_parts_no_hex . $current_message_parts_no_hex;
 
             //callMessageBird
             $response[$i] = $this->callMessageBird($phone_number, $message_part, $UserHeader);
